@@ -1,0 +1,72 @@
+# Organization of the archive
+
+    ARM/     arm source example and compilation with libmincaml   
+    asml/    asml examples
+    doc/     all the documentation, start with index.hml
+    java/    MinCaml parser in Java + examples of tree traversal algo, if you do the project in java  
+    mincaml/ MinCaml examples
+    ocaml/   MinCaml parser in OCaml, if you do the project in OCaml
+    scripts/ put your test scripts and symbolic links there, and add this directory to your path
+    tests/   put your tests there
+    tools/   asml intepreter (linux binary)
+
+We recommend that you add scripts/ and the dir that contains mincamlc to your
+PATH.
+
+==============================================================================
+
+# LAUNCHING THE COMPILER
+1. **Clone the project Repository**
+```
+git clone https://github.com/nhman2002/Compil-Projet.git
+```
+
+2. **Compile the project**
+```
+cd archive/archive
+make
+```
+or you can follow the instructions in the Makefile for more options
+
+# Running the Compiler and Test Files
+**1. Running Test Files and Generating `.ml` to `.asml` Files**
+
+The project includes several test files located in the `tests` directory. These tests cover some functionalities such as type-checking, .asml generation, syntax validation, and code generation.
+
+To execute test files, you can follow these steps:
+
+1. Navigate to the `java` directory
+Before running commands, change to the java directory for easier access to the mincamlc executable:
+    ```
+    cd java
+    ```
+
+2. Execute test files
+
+Use the following command to `.ml` file:
+```
+./mincamlc [../fileLocation/filename.ml]
+```
+Examples:
+```
+./mincamlc ../tests/asmlcheck/fib.ml  
+./mincamlc ../tests/gen-code/ack.ml 
+```
+
+**2. Generating ARM Code from the `.asml` Files:**
+
+To generate ARM assembly code from `.asml` files, use the Python script provided in the `ASML2ASMpyt` directory. Run the following command from the project’s root directory:
+
+```
+./ASML2ASMpyt/main.py -f [filepath/filename.asml]
+
+```
+
+Example:
+```
+./ASML2ASMpyt/main.py -f ./asml/array.asml  
+```
+The above command will produce the ARM equivalent of the specified `.asml` file.
+
+# Additional Information
+For more details on available command options and usage, please refer to the User Manual included in the project documentation.
