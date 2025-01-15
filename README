@@ -18,7 +18,7 @@ PATH.
 # LAUNCHING THE COMPILER
 1. **Clone the project Repository**
 ```
-git clone https://github.com/nhman2002/Compil-Projet.git
+    git clone https://github.com/nhman2002/Compil-Projet.git
 ```
 
 2. **Compile the project**
