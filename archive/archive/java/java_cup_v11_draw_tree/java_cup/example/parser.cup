@@ -1,0 +1,188 @@
+import java_cup.runtime.*;
+import java.util.*;
+
+/* In this solution the possibility to give the score of 1 to the attributes not listed was not handled */
+
+init with {:
+    classHash = new HashMap();
+
+    System.out.println("Achieved scores.\n");
+:};
+
+
+parser code {:
+    public static HashMap classHash;
+    
+    /* Return semantic value of symbol in position (position) */
+    public Object stack(int position) {
+        return (((Symbol)stack.elementAt(tos+position)).value);
+    }
+
+:};
+
+
+action code {:
+    class Attrib {
+        private String name;
+        private Integer weight;
+        
+        Attrib(String name, Integer weight){
+            this.name = name;
+            this.weight = weight;
+        }
+	
+        String getName(){
+            return this.name;
+        }
+        Integer getWeight(){
+            return this.weight;
+        }
+
+    };
+:};
+
+      
+terminal ARROW, MINUS, PLUS, DIV, STAR, OB, CB, SC, C, D, DD, EQ;
+terminal String WORD, ID;
+terminal Integer NUMBER;
+
+non terminal prog, definitions, definition, descriptions, description, sentence;
+
+non terminal HashMap attrib_list;
+non terminal Attrib attrib;
+non terminal Integer point, valutation, scores;
+non terminal String ident, sentence_elem;
+non terminal String NT0;
+
+start with prog;
+
+
+
+
+prog ::= definitions D descriptions;
+
+
+/////////////////////////////////////////////////////////
+//DEFINITIONS
+/////////////////////////////////////////////////////////
+
+definitions ::=		definitions definition
+		      	|definition
+;
+
+
+definition ::= OB attrib_list:attribHash CB ARROW ident:idName
+{:
+	// The attribute HashMap is completed...
+	// it can be inserted inside the hashTable
+	parser.classHash.put(idName,attribHash);
+:};
+
+
+
+attrib_list ::= attrib_list:attribHash C attrib:attrib
+{:
+	//Insertion of the new attribute inside the attribute HashMap
+        attribHash.put(attrib.name, attrib.weight);
+
+  	RESULT = attribHash;
+:};
+
+
+
+attrib_list ::= attrib:attrib  
+{:
+	// A new HashMap is created to insert the attributes
+        HashMap hash = new HashMap();
+	// Current attribute is inserted inside the HashMap
+        hash.put(attrib.getName(), attrib.getWeight());
+	
+	RESULT = hash;	
+:};
+
+
+attrib ::= 	ident:a DD NUMBER:b {:
+	//Pass an object of the attribute type
+  	RESULT = new Attrib(a,b);
+:};
+
+
+
+
+////////////////////////////////////////////////////////
+//DESCRIPTIONS
+////////////////////////////////////////////////////////
+
+descriptions ::= 	descriptions description   
+			|  
+;
+
+description ::= 	ident DD scores:score EQ sentence SC {:
+	System.out.println(", "+score);
+:};
+
+
+
+// The V terminal has the function of the sum operator
+scores ::= scores:val1 NT0 C valutation:val2
+{: 
+ 	//I sum the valuations of the present product
+	RESULT = new Integer(val1.intValue() + val2.intValue()); 
+:};
+
+NT0 ::= {: RESULT = (String)parser.stack(-2); :};
+
+
+
+
+
+
+scores ::= valutation:val {: RESULT = val; :}
+;
+		
+
+
+
+
+
+valutation ::= point:punt ident:name {:
+	String identClass = (String)parser.stack(-3);
+
+       	//I search inside the hash table the entry related to the current class(identClasse)
+        HashMap hash = (HashMap)parser.classHash.get(identClass);
+
+	//I search inside the hash HashMap the weight associated to the current attribute
+	Integer weight = (Integer)hash.get(name);
+	
+	//Compute the operation
+        RESULT = new Integer(weight.intValue() * punt.intValue());
+:}; 
+
+
+
+
+point ::= 	  STAR 		{: RESULT = new Integer(3); :}
+		 |PLUS 		{: RESULT = new Integer(2); :}
+		 |DIV 		{: RESULT = new Integer(1); :}
+		 |MINUS		{: RESULT = new Integer(0); :}
+;
+
+
+
+
+////////////////////////////////////////////////////////////////
+/////// ELEMENTARY GRAMMAR
+////////////////////////////////////////////////////////////////
+
+sentence ::= 	sentence sentence_elem:name {: System.out.print(" "+name);  :}
+	  	| sentence_elem:name {: System.out.print(name);  :} 
+;
+
+sentence_elem ::= WORD:name {: RESULT = name; :}
+	  	 |NUMBER:num {: RESULT = num.toString();  :}
+; 
+
+
+ident ::= ID:a {: RESULT=a; :} 
+	| WORD:a {: RESULT=a; :}
+;

@@ -1,8 +1,8 @@
 
-SRC= Lexer.java Parser.java 
+SRC= Lexer.java Parser.java Main.java
 
 all: ${SRC} 
-	javac -cp java-cup-11b-runtime.jar:. *.java
+	javac -Xlint -cp java-cup-11b-runtime.jar:java-getopt-1.0.13.jar *.java
 
 Lexer.java: Lexer.flex
 	jflex/bin/jflex Lexer.flex 
@@ -12,3 +12,6 @@ Parser.java: Parser.cup
 
 clean:
 	rm -rf *.class rm sym.java Lexer.java Parser.java *~
+
+test:
+    ../scripts/mincaml-test-parser.sh
