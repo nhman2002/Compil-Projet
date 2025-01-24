@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="jflex.UnicodePropertiesTest" time="0.296" tests="20" errors="0" skipped="0" failures="0">
+<testsuite name="jflex.UnicodePropertiesTest" time="0.368" tests="20" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="17.0.13+11-Ubuntu-2ubuntu122.04"/>
@@ -57,23 +57,23 @@
     <property name="sun.stdout.encoding" value="UTF-8"/>
   </properties>
   <testcase name="testUnsupportedVersion" classname="jflex.UnicodePropertiesTest" time="0"/>
-  <testcase name="testSupportedVersions" classname="jflex.UnicodePropertiesTest" time="0.175"/>
-  <testcase name="testDefaultVersionAliases" classname="jflex.UnicodePropertiesTest" time="0.025"/>
-  <testcase name="testSingleLetterProperties_5_0" classname="jflex.UnicodePropertiesTest" time="0.006"/>
-  <testcase name="testSingleLetterProperties_5_1" classname="jflex.UnicodePropertiesTest" time="0.005"/>
-  <testcase name="testSingleLetterProperties_5_2" classname="jflex.UnicodePropertiesTest" time="0.005"/>
-  <testcase name="testSingleLetterProperties_6_0" classname="jflex.UnicodePropertiesTest" time="0.005"/>
-  <testcase name="testDefaultVersion" classname="jflex.UnicodePropertiesTest" time="0.007"/>
+  <testcase name="testSupportedVersions" classname="jflex.UnicodePropertiesTest" time="0.232"/>
+  <testcase name="testDefaultVersionAliases" classname="jflex.UnicodePropertiesTest" time="0.028"/>
+  <testcase name="testSingleLetterProperties_5_0" classname="jflex.UnicodePropertiesTest" time="0.007"/>
+  <testcase name="testSingleLetterProperties_5_1" classname="jflex.UnicodePropertiesTest" time="0.007"/>
+  <testcase name="testSingleLetterProperties_5_2" classname="jflex.UnicodePropertiesTest" time="0.011"/>
+  <testcase name="testSingleLetterProperties_6_0" classname="jflex.UnicodePropertiesTest" time="0.009"/>
+  <testcase name="testDefaultVersion" classname="jflex.UnicodePropertiesTest" time="0.012"/>
   <testcase name="testCaselessMatches_1_1" classname="jflex.UnicodePropertiesTest" time="0.001"/>
   <testcase name="testCaselessMatches_2_0" classname="jflex.UnicodePropertiesTest" time="0.001"/>
-  <testcase name="testCaselessMatches_2_1" classname="jflex.UnicodePropertiesTest" time="0.001"/>
-  <testcase name="testCaselessMatches_3_0" classname="jflex.UnicodePropertiesTest" time="0.005"/>
-  <testcase name="testCaselessMatches_3_1" classname="jflex.UnicodePropertiesTest" time="0.005"/>
+  <testcase name="testCaselessMatches_2_1" classname="jflex.UnicodePropertiesTest" time="0.002"/>
+  <testcase name="testCaselessMatches_3_0" classname="jflex.UnicodePropertiesTest" time="0.004"/>
+  <testcase name="testCaselessMatches_3_1" classname="jflex.UnicodePropertiesTest" time="0.006"/>
   <testcase name="testCaselessMatches_3_2" classname="jflex.UnicodePropertiesTest" time="0.004"/>
-  <testcase name="testCaselessMatches_4_0" classname="jflex.UnicodePropertiesTest" time="0.007"/>
-  <testcase name="testCaselessMatches_4_1" classname="jflex.UnicodePropertiesTest" time="0.009"/>
-  <testcase name="testCaselessMatches_5_0" classname="jflex.UnicodePropertiesTest" time="0.007"/>
-  <testcase name="testCaselessMatches_5_1" classname="jflex.UnicodePropertiesTest" time="0.009"/>
-  <testcase name="testCaselessMatches_5_2" classname="jflex.UnicodePropertiesTest" time="0.01"/>
-  <testcase name="testCaselessMatches_6_0" classname="jflex.UnicodePropertiesTest" time="0.009"/>
+  <testcase name="testCaselessMatches_4_0" classname="jflex.UnicodePropertiesTest" time="0.006"/>
+  <testcase name="testCaselessMatches_4_1" classname="jflex.UnicodePropertiesTest" time="0.005"/>
+  <testcase name="testCaselessMatches_5_0" classname="jflex.UnicodePropertiesTest" time="0.009"/>
+  <testcase name="testCaselessMatches_5_1" classname="jflex.UnicodePropertiesTest" time="0.007"/>
+  <testcase name="testCaselessMatches_5_2" classname="jflex.UnicodePropertiesTest" time="0.009"/>
+  <testcase name="testCaselessMatches_6_0" classname="jflex.UnicodePropertiesTest" time="0.008"/>
 </testsuite>

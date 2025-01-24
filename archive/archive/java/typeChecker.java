@@ -9,59 +9,64 @@ public class typeChecker {
         this.symbols = new Hashtable<String, Type>();
     }
 
-    public boolean check(Exp ast) {
-        Map<String, Type> predefined = predef.getPredefMap();
+    public boolean check(Exp AST){
+
+        Map <String,Type> predefined = predef.getPredefMap();
+
         this.ok = true;
-        List<typeEquation> equations = generateEquations(ast, predefined, new TUnit(), " ");
-        if (!ok) {
+        List<typeEquation> equations = generateEquations(AST,predefined,new TUnit()," ");
+        if(!ok){
             System.exit(1);
         }
         solveEquations(equations);
 
-        if (!ok) {
+        if(!ok){
             System.exit(1);
         }
         return ok;
     }
 
-    private Type replace(Type t, TVar t1, Type t2) {
-        if (t == null)
+    private Type replace(Type t, TVar t1, Type t2){
+        if(t == null)
             return t;
 
-        if (t.equals(t1))
+        if(t.equals(t1))
             return t2;
-        else if (t instanceof TArray) {
-            if (((TArray) t).getType().equals(t1))
+        else if(t instanceof TArray){
+            if(((TArray)t).getType().equals(t1))
                 return new TArray(t2);
             else
                 return t;
-        } else if (t instanceof TFun) {
-            List<Type> l = ((TFun) t).getArgs();
+        }
+        else if(t instanceof TFun){
+            List<Type> l = ((TFun)t).getArgs();
             List<Type> new_l = new ArrayList<Type>();
-            for (Type type : l) {
-                if (type.equals(t1))
+            for(Type type : l){
+                if(type.equals(t1))
                     new_l.add(t2);
                 else
                     new_l.add(type);
             }
             Type newReturnType;
-            Type oldReturnType = ((TFun) t).getReturnType();
-            if (oldReturnType.equals(t1))
+            Type oldReturnType = ((TFun)t).getReturnType();
+            if(oldReturnType.equals(t1))
                 newReturnType = t2;
             else
                 newReturnType = oldReturnType;
-            return new TFun(new_l, newReturnType);
-        } else if (t instanceof TTuple) {
-            List<Type> l = ((TTuple) t).getEle();
+            return new TFun(new_l,newReturnType);
+        }
+        else if(t instanceof TTuple){
+            List<Type> l = ((TTuple)t).getEle();
             List<Type> new_l = new ArrayList<Type>();
-            for (Type type : l) {
-                if (type.equals(t1))
+            for(Type type : l){
+                if(type.equals(t1))
                     new_l.add(t2);
                 else
                     new_l.add(type);
             }
             return new TTuple(new_l);
-        } else
+        }
+        else
             return t;
     }
 
@@ -329,9 +334,6 @@ public class typeChecker {
             Map<String,Type> env2 = new Hashtable<String,Type>(env);
             String fun_context = context + id_fun + " ";
             for(int i = 0; i<ids_args.size(); i++){
-                //FOR DEBUG PURPOSE
-                //System.out.println(letrecexp.getFd().getE());
-                //System.out.println(type_fun.getArgs().get(i));
                 env2.put(ids_args.get(i).getId(), type_fun.getArgs().get(i));
                 symbols.put(fun_context + ids_args.get(i).getId(), type_fun.getArgs().get(i));
             }

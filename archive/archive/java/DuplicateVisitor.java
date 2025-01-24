@@ -6,8 +6,8 @@ public class DuplicateVisitor implements ObjVisitor<Exp>{
         return e;
     }
 
-    public Exp visit(Bool e) {
-        return e;
+    public Exp visit(Bool b) {
+        return b;
     }
 
     public Exp visit(Int e) {

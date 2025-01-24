@@ -41,7 +41,7 @@ public class Main {
     // options
     boolean typeCheckOnly = false;
     boolean parseOnly = false;
-    boolean genArmFromAsml = false;
+    // boolean genAsmFromAsml = false;
     boolean genAsmlFlag = false;
     boolean bOutputFile = false;
 
@@ -58,13 +58,13 @@ public class Main {
     longOpts[3] = new LongOpt("version", LongOpt.NO_ARGUMENT, null, 'v');
     longOpts[4] = new LongOpt("asml", LongOpt.NO_ARGUMENT, null, 'a');
 
-    Getopt g = new Getopt("testCompiler", argv, "ho:i:vtpSa", longOpts);
+    Getopt g = new Getopt("testCompiler", argv, "hi:o:vtpa", longOpts);
     // 1st param: program name
     // 2nd param: arguments array
-    // 3rd param: Option Specification String 
-    // o: → Option o requires an argument (indicated by the colon :).
+    // 3rd param: Option Specification String
     // i: → Option i requires an argument.
-    // 4th param: Long Options 
+    // o: → Option o requires an argument (indicated by the colon :).
+    // 4th param: Long Options
 
     g.setOpterr(false);
 
@@ -81,7 +81,7 @@ public class Main {
           System.out.println("  -a, --asml           Generate ASML file");
           System.out.println("  -t,                  typecheck only");
           System.out.println("  -p,                  parse only");
-          System.out.println("  -S,                  generate asm from asml file");
+          // System.out.println(" -S, generate asm from asml file");
           System.exit(0);
           break;
         case 'i':
@@ -96,6 +96,7 @@ public class Main {
         case 'v':
           System.out.println("Version 1.0");
           System.exit(0);
+          break;
         case 't':
           typeCheckOnly = true;
           break;
@@ -105,15 +106,17 @@ public class Main {
         case 'p':
           parseOnly = true;
           break;
-        case 'S':
-          genArmFromAsml = true;
-          break;
+        // case 'S':
+        // genAsmFromAsml = true;
+        // break;
         case '?':
           System.err.println("Unknown option: -" + (char) g.getOptopt());
           System.exit(1);
+          break;
         default:
           System.err.println("Programming error, getopt returned incorrect option character code.");
           System.exit(1);
+          break;
       }
 
       // errorMessage
@@ -139,13 +142,14 @@ public class Main {
           Exp expression = (Exp) p.parse().value;
 
           assert (expression != null);
+
+          System.out.println("------ Type Check ------");
           typeChecker checker = new typeChecker();
-          System.out.println("Type checking...");
-          // typeChecker checker = new typeChecker();
-          // result = checker.check(expression);
 
           boolean result = false;
+          System.out.println(result);
           result = checker.check(expression);
+
           System.out.println(result);
 
           if (!result) {
@@ -172,11 +176,6 @@ public class Main {
           assert (expression != null);
           predef.initialisation();
 
-          // try {
-          // Parser p = new Parser(new Lexer(new FileReader(argv[0])));
-          // Exp expression = (Exp) p.parse().value;
-          // assert (expression != null);
-
           System.out.println("------ AST ------");
           expression.accept(new PrintVisitor());
           System.out.println();
@@ -184,14 +183,29 @@ public class Main {
           System.out.println("------ Height of the AST ----");
           int height = Height.computeHeight(expression);
           System.out.println("using Height.computeHeight: " + height);
+          // Pros and Cons
+          // Pros:
+          // Simple and closely resembles the recursive definition of tree traversal.
+          // No need for modifying AST classes or defining extra visitor interfaces.
+          // Cons:
+          // Error-prone: Relies on casting and instanceof, which breaks type safety.
+          // Not extensible: Adding new node types requires modifying the
+          // Height.computeHeight method.
+          // Violates OOP principles: Logic is not encapsulated in the AST nodes.
 
           ObjVisitor<Integer> v = new HeightVisitor();
           height = expression.accept(v);
           System.out.println("using HeightVisitor: " + height);
+          // Pros and Cons
+          // Pros:
+          // Type-safe: Avoids instanceof and casting, leveraging polymorphism.
+          // Extensible: Adding new operations (e.g., height computation, evaluation,
+          // printing) is as simple as defining a new visitor.
+          // Encapsulation: Logic is encapsulated in visitors, keeping AST nodes clean.
+          // Cons:
+          // Slightly more verbose: Requires defining visitor interfaces and implementing
+          // methods for each node type.
 
-          // } catch (Exception e) {
-          // e.toString();
-          // }
         } catch (Exception e) {
         }
       } else if (bOutputFile) {
@@ -283,8 +297,9 @@ public class Main {
           Process process;
           try {
             String cmd = "python3 ../ASML2ASM/main.py -fo " + asmlFile + " " + asmFile;
-            // System.out.println(cmd);
             process = Runtime.getRuntime().exec(cmd);
+            // System.out.println(process + "heloo");
+
           } catch (Exception e) {
             System.out.println("Exception Raised" + e.toString());
           }
@@ -294,10 +309,10 @@ public class Main {
         }
       }
 
-      else if (genArmFromAsml) {
+      else if (genAsmlFlag) {
         try {
           if (argv.length == 1) {
-            System.out.println("input file must be defined!");
+            System.out.println("No input file specified");
             System.exit(1);
           }
           inputFile = argv[1];
@@ -322,9 +337,9 @@ public class Main {
 
           System.out.println("\n\n------ Type Check ------");
           typeChecker checker = new typeChecker();
-          boolean result = false;
-          result = checker.check(expression);
-          if (result) {
+          boolean ok = false;
+          ok = checker.check(expression);
+          if (ok) {
             System.out.println("Well typed code");
           } else {
             System.out.println("Code is not well typed");
@@ -383,6 +398,105 @@ public class Main {
         } catch (Exception e) {
           e.printStackTrace();
         }
+      }
+      else{
+      try {
+
+      Parser p = new Parser(new Lexer(new FileReader(inputFile)));
+      Exp expression = (Exp) p.parse().value;
+      assert (expression != null);
+
+      predef.initialisation();
+
+      System.out.println("------ AST ------");
+      expression.accept(new PrintVisitor());
+      System.out.println();
+
+      System.out.println("\n\n------ Height of the AST ----");
+      int height = Height.computeHeight(expression);
+      System.out.println("using Height.computeHeight: " + height);
+
+      ObjVisitor<Integer> v = new HeightVisitor();
+      height = expression.accept(v);
+      System.out.println("using HeightVisitor: " + height);
+
+      System.out.println("\n\n------ Type Check ------");
+      typeChecker checker = new typeChecker();
+      boolean ok = false;
+      ok = checker.check(expression);
+      if(ok){
+      System.out.println("Well typed code");
+      }else{
+      System.out.println("Code is not well typed");
+      }
+
+      System.out.println("\n\n----Var Computation-----");
+      Vars varss = new Vars();
+      ArrayList<String> varList = varss.computeVars(expression);
+      System.out.println(varList);
+
+      System.out.println("\n\n---- Duplicated AST ----");
+      ObjVisitor<Exp> x = new DuplicateVisitor();
+      Exp duplicated_expression = expression.accept(x);
+      duplicated_expression.accept(new PrintVisitor());
+      System.out.println();
+
+      System.out.println("\n\n---- Set of variables ----");
+      ObjVisitor<String> w = new VariableVisitor();
+      String vars = expression.accept(w);
+      System.out.println("Set of Variables in AST using visitor: " + vars);
+
+      System.out.println("\n\n------ AST Knormalized ------");
+      Knorm knorms = new Knorm();
+      Exp expression3 = knorms.computeKnorm(expression);
+      expression3.accept(new PrintVisitor());
+      System.out.println();
+
+      System.out.println("\n\n------ Alpha Convertion------");
+      alphaCon ac=new alphaCon();
+      Exp alpha=expression3.accept(ac);
+      alpha.accept(new PrintVisitor());
+      System.out.println();
+
+      System.out.println("\n\n------ Nested Let Reduction ------");
+      nestedLetReduc nlr=new nestedLetReduc();
+      Exp e_nlr=expression3.accept(nlr);
+      e_nlr.accept(new PrintVisitor());
+      System.out.println();
+
+      Path path = Paths.get(inputFile);
+      String fileName = path.getFileName().toString();
+      String data[] = fileName.split(".ml");
+      String fileNameWithoutExt = data[0];
+
+      System.out.println("\n\n------ ASML------");
+      asmlGen ag=new asmlGen();
+      String asml = e_nlr.accept(ag);
+
+      asml = asmlGen.declarationFloat + asmlGen.declaration + asmlGen.entryPoint +
+      asml;
+      String asmlFile = path.getParent()+"/"+fileNameWithoutExt + ".asml";
+      PrintWriter wr = new PrintWriter( new BufferedWriter( new
+      FileWriter(asmlFile)));
+      wr.print(asml);
+      wr.close();
+      System.out.println(asml);
+      System.out.println();
+
+      String asmFile =path.getParent()+ "/" + fileNameWithoutExt + ".s";
+      Process process;
+      try{
+      String cmd="python3 ../ASML2ASM/main.py -fo "+asmlFile+" "+asmFile;
+      //System.out.println(cmd);
+      process = Runtime.getRuntime().exec(cmd);
+      }catch(Exception e) {
+      System.out.println("Exception Raised" + e.toString());
+      }
+
+      } catch (Exception e) {
+      e.printStackTrace();
+      }
+
       }
 
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="jflex.AntTaskTests" time="0.156" tests="15" errors="0" skipped="0" failures="0">
+<testsuite name="jflex.AntTaskTests" time="0.141" tests="15" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="17.0.13+11-Ubuntu-2ubuntu122.04"/>
@@ -56,19 +56,19 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.stdout.encoding" value="UTF-8"/>
   </properties>
-  <testcase name="testSkipMinimization" classname="jflex.AntTaskTests" time="0.074"/>
+  <testcase name="testSkipMinimization" classname="jflex.AntTaskTests" time="0.066"/>
   <testcase name="testLegacyDot" classname="jflex.AntTaskTests" time="0.001"/>
-  <testcase name="testPackageAndClassDefaults" classname="jflex.AntTaskTests" time="0.009"/>
-  <testcase name="testDot" classname="jflex.AntTaskTests" time="0.004"/>
-  <testcase name="testNobak" classname="jflex.AntTaskTests" time="0.005"/>
-  <testcase name="testNomin" classname="jflex.AntTaskTests" time="0.004"/>
-  <testcase name="testDump" classname="jflex.AntTaskTests" time="0.004"/>
+  <testcase name="testPackageAndClassDefaults" classname="jflex.AntTaskTests" time="0.008"/>
+  <testcase name="testDot" classname="jflex.AntTaskTests" time="0.005"/>
+  <testcase name="testNobak" classname="jflex.AntTaskTests" time="0.003"/>
+  <testcase name="testNomin" classname="jflex.AntTaskTests" time="0.003"/>
+  <testcase name="testDump" classname="jflex.AntTaskTests" time="0.005"/>
   <testcase name="testJlex" classname="jflex.AntTaskTests" time="0.004"/>
   <testcase name="testSkel" classname="jflex.AntTaskTests" time="0.02"/>
-  <testcase name="testTime" classname="jflex.AntTaskTests" time="0.004"/>
-  <testcase name="testVerbose" classname="jflex.AntTaskTests" time="0.004"/>
-  <testcase name="testDefaultDir" classname="jflex.AntTaskTests" time="0.005"/>
-  <testcase name="testDestdir" classname="jflex.AntTaskTests" time="0.011"/>
+  <testcase name="testTime" classname="jflex.AntTaskTests" time="0.002"/>
+  <testcase name="testVerbose" classname="jflex.AntTaskTests" time="0.003"/>
+  <testcase name="testDefaultDir" classname="jflex.AntTaskTests" time="0.004"/>
+  <testcase name="testDestdir" classname="jflex.AntTaskTests" time="0.009"/>
   <testcase name="testPackageAndClass" classname="jflex.AntTaskTests" time="0.004"/>
-  <testcase name="testOutdir" classname="jflex.AntTaskTests" time="0.003"/>
+  <testcase name="testOutdir" classname="jflex.AntTaskTests" time="0.004"/>
 </testsuite>

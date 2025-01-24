@@ -1,5 +1,5 @@
 ------ AST ------
-(let x = 42 in (print_int x))
+(let x = (40 + 1) in (print_int x))
 
 
 ------ Height of the AST ----
@@ -16,7 +16,7 @@ Well typed code
 
 
 ---- Duplicated AST ----
-(let x = 42 in (print_int x))
+(let x = (40 + 1) in (print_int x))
 
 
 ---- Set of variables ----
@@ -24,21 +24,24 @@ Set of Variables in AST using visitor: x
 
 
 ------ AST Knormalized ------
-(let x = 42 in (print_int x))
+(let x = (let v2 = 40 in (let v1 = 1 in (v2 + v1))) in (print_int x))
 
 
 ------ Alpha Convertion------
-(let ?v0 = 42 in (print_int ?v1))
+(let ?v0 = (let ?v1 = 40 in (let ?v2 = 1 in (?v3 + ?v4))) in (print_int x))
 
 
 ------ Nested Let Reduction ------
-(let x = 42 in (print_int x))
+(let v2 = 40 in (let v1 = 1 in (let x = (v2 + v1) in (print_int x))))
 
 
 ------ ASML------
 
 let _ = 
 	
-	let x = 42 in 
-	call _min_caml_print_int x   
+	let v2 = 40 in 
+	let v1 = 1 in 
+	let x = add v2 v1 in 
+	call _min_caml_print_int x     
 
+Process[pid=218293, exitValue="not exited"]heloo
