@@ -1,0 +1,46 @@
+------ AST ------
+(let x = (let ?v4 = (let x = true in ()) in 42) in (print_int x))
+
+
+------ Height of the AST ----
+using Height.computeHeight: 3
+using HeightVisitor: 3
+
+
+------ Type Check ------
+Well typed code
+
+
+----Var Computation-----
+[x, ?v4, x, print_int]
+
+
+---- Duplicated AST ----
+(let x = (let ?v4 = (let x = true in ()) in 42) in (print_int x))
+
+
+---- Set of variables ----
+Set of Variables in AST using visitor: x ?v4 x 
+
+
+------ AST Knormalized ------
+(let x = (let ?v4 = (let x = true in ()) in 42) in (print_int x))
+
+
+------ Alpha Convertion------
+(let ?v5 = (let ?v6 = (let ?v7 = true in ()) in 42) in (print_int x))
+
+
+------ Nested Let Reduction ------
+(let x = true in (let ?v4 = () in (let x = 42 in (print_int x))))
+
+
+------ ASML------
+
+let _ = 
+	
+	let x = 1 in 
+	let ?v4 = unit in 
+	let x = 42 in 
+	call _min_caml_print_int x     
+

@@ -1,0 +1,34 @@
+
+let _ack x y = 
+	
+	let v0 = sub x 1 in 
+	let v1 = 1 in 
+	let v2 = sub x 1 in 
+	let v3 = sub y 1 in 
+	let v5 = sub x 1 in 
+	let v6 = sub y 1 in 
+	let e1 = x in 
+	let e2 = 0 in 
+	if e1 <= e2 then ( 
+		
+	let v2 = y in 
+	let v1 = 1 in 
+add v2 v1 
+	) else (
+		 
+	let e3 = y in 
+	let e4 = 0 in 
+	if e3 <= e4 then ( 
+		v0 v1  
+	) else (
+		 
+	let v4 = x v3  in call _ack v2 v4 
+	let v7 = x v6  in call _ack v5 v7  
+	) 
+	)
+let _ = 
+	
+	let a1 = 3 in 
+	let a2 = 10 in 
+	let a0 = call _ack a1 a2   in 
+	call _min_caml_print_int a0     
