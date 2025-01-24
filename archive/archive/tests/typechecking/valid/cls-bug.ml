@@ -1,3 +1,3 @@
 let rec f x = x + 123 in
-let rec g y = f in
-print_int ((g 456) 789)
+let rec d y = f in
+print_int ((d 456) 789)

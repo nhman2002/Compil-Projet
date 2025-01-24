@@ -24,48 +24,39 @@ class asmlFunc(asmlBranch,asmlFunDef):
             self.parameters.append(op)
     
     def allocRegSpill(self):
-        self.allocator={} #old name -> new name
+        self.allocator={} 
         
-        #renaming of parameters
         regcnt=0 
         maxRegcnt=3
         self.stackcnt=8
         for p in self.parameters:
-            if regcnt<=maxRegcnt: #into register
+            if regcnt<=maxRegcnt: 
                 self.allocator[p.getName()]="r" + str(regcnt)
                 p.renameVariable("r" + str(regcnt))
                 regcnt+=1
-            else: #stack
+            else: 
                 self.allocator[p.getName()]="[fp, #" + str(self.stackcnt) + "]"
                 p.renameVariable("[fp, #" + str(self.stackcnt) + "]")
                 self.stackcnt+=4
-        #print("1",self.allocator)
-        #recovery of operands (local variables + parameters) of the function
+        
         ops=[]
         for exp in self.expressions:
-            #print("ops",exp)
             ops=ops+exp.getOpersCon(operType.VAR)
-            #tmp=[str(i) for i in ops]
-            #print("tmp",tmp)
 
 
-        #recovery of unique operand names (local variables + parameters)
         varNames=[]
         for op in ops:
-            #for each operand, if it is a variable and it is not yet known
-            #and that it is not a parameter, so we add it to the list
             if not op.getName() in varNames and not op.getName() in self.allocator:
                 varNames.append(op.getName())
         
-        #renaming variables
-        regcnt = 5 # 5-10, then stack
-        if len(varNames)<8: #We just keep r12 for the result of an instruction
+        regcnt = 5 
+        if len(varNames)<8: 
             maxRegcnt = 10
-        else: # we keep r12 for the result, and r9 + r10 for loading from memory
+        else: 
             maxRegcnt = 8
         self.stackcnt = -4
 
-        for  nameOp in varNames: #for each unique variable
+        for  nameOp in varNames: 
             if regcnt <= maxRegcnt:
                 self.allocator[nameOp]="r" + str(regcnt)
                 regcnt += 1
@@ -73,12 +64,11 @@ class asmlFunc(asmlBranch,asmlFunDef):
                 self.stackcnt -=4
                 self.allocator[nameOp]="[fp, #" + str(self.stackcnt) + "]"
         
-        #we filled the self.allocator, we can now rename the variables (the allocation)
+        
         for op in ops:
-            #print("allloc",op,op.getName(),self.allocator[op.getName()])
+            
             op.renameVariable(self.allocator[op.getName()])
 
-        #print("self\n",self,"\nend")
         
     def generateAsm(self):
         code = ""

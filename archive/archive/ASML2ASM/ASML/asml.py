@@ -13,13 +13,13 @@ class asml:
         label=''
         for instr in lines:
             instr=instr.strip()
-            if re.match(r'let _[a-z0-9_]* =[ 0-9.]*',instr) is not None: #label (= float or func)
+            if re.match(r'let _[a-z0-9_]* =[ 0-9.]*',instr) is not None: 
                 start=instr.index('let _')+4
                 end=instr.index('=')-1
                 label=instr[start:end]
                 self.labels[label]=[]
                 instr=instr.strip()
-                if not instr.endswith('='): #func
+                if not instr.endswith('='):
                     self.labels[label].append(instr)
                 else:
                     if not (instr==')' or instr==''):

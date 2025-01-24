@@ -3,7 +3,7 @@ from .common.operType import operType
 
 class asmlOper(asmlExp):
     def __init__(self,name,type):
-        self.name=name #name if variable / value if immediate value
+        self.name=name 
         self.type=type
 
     def getName(self):

@@ -55,18 +55,16 @@ Examples:
 
 **2. Generating ARM Code from the `.asml` Files:**
 
-To generate ARM assembly code from `.asml` files, use the Python script provided in the `ASML2ASMpyt` directory. Run the following command from the project’s root directory:
+To generate ARM assembly code from `.asml` files, use the Python script provided in the `ASML2ASM` directory. Run the following command from the project’s root directory:
 
 ```
-./ASML2ASMpyt/main.py -f [filepath/filename.asml]
+./mincamlc -p filepath/filename.asml
 
 ```
 
 Example:
 ```
-./ASML2ASMpyt/main.py -f ./asml/array.asml  
+./mincamlc -p ../tests/typechecking/valid/let_seq.ml
 ```
 The above command will produce the ARM equivalent of the specified `.asml` file.
 
-# Additional Information
-For more details on available command options and usage, please refer to the User Manual included in the project documentation.

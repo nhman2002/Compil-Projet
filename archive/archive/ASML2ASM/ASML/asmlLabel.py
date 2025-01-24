@@ -1,6 +1,3 @@
-from .common.asmlFunDef import asmlFunDef
-from .common.operType import operType
-from .asmlOper import asmlOper
 from .asmlExp import asmlExp
 
 class asmlLabel(asmlExp):

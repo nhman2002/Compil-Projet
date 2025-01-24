@@ -9,7 +9,7 @@ class asmlIf(asmlBranch,asmlExp):
         asmlBranch.__init__(self)
         asmlIf.areInIf=True
         self.exLabel=None
-        self.constructionThen=True #to indicate if we are in the then or else
+        self.constructionThen=True 
         data=instruction.split(" ")
         optype=None
         if re.match(r'[0-9]+',data[1]) is not None:
@@ -28,7 +28,6 @@ class asmlIf(asmlBranch,asmlExp):
         self.expElse=[]
 
     def addInstruction(self,expression):
-        #print(self.constructionThen,expression)
         if self.constructionThen:
             self.expThen.append(expression)
         else:
@@ -96,7 +95,6 @@ class asmlIf(asmlBranch,asmlExp):
                     code += "\tldr r10, =#" + str(self.op2) + "\n"
                 code += "\tcmp " + str(self.op1) + ", r10\n"
         
-        #floats are not yet managed
         if self.comparator=="=":
             code += "\tbne LAB_E_" + str(id(self)) + "\n"
         elif self.comparator=="<=":
@@ -108,7 +106,6 @@ class asmlIf(asmlBranch,asmlExp):
         elif self.comparator==">":
             code += "\tble LAB_E_" + str(id(self)) + "\n"
 
-        #then
         code += "LAB_T" + str(id(self)) + ":\n"
 
         for exp in self.expThen:
@@ -120,7 +117,6 @@ class asmlIf(asmlBranch,asmlExp):
 
         code += "LAB_E_" + str(id(self)) + ":\n"
         for exp in self.expElse:
-            #print(exp)
             code += exp.generateAsm()
         code += "\tb "+self.exLabel+"\n"
 

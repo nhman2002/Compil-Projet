@@ -1,14 +1,11 @@
 from .asmlCall import asmlCall
-from .asmlNew import asmlNew
 from .asmlMem import asmlMem
 from .asmlArithmetics import asmlArithmetics
-from .asmlLabel import asmlLabel
 from .asmlBranch import asmlBranch
 from .asmlFunc import asmlFunc
 from .asmlFloat import asmlFloat
 from .asmlIf import asmlIf
 from .asmlLet import asmlLet
-from .common.asmlFunDef import asmlFunDef
 from .common.insType import insType
 
 
@@ -24,8 +21,6 @@ class Tree:
     def decoderInstruction(self, instruction,currentBranch):
         instruction=instruction.strip()
         instrType=insType.getTypeInstruction(instruction)
-
-        #print(currentBranch,instruction,instrType)
 
         if instrType==insType.LET_FUN:
             a_fun=asmlFunc(instruction)
@@ -46,7 +41,6 @@ class Tree:
             currentBranch=currentBranch.getParent()
         elif instrType==insType.LET_IN:
             a_let=asmlLet(instruction)
-            #print("uuuuu\n",a_let,"\naaaaaaaaa")
             currentBranch.addInstruction(a_let)
         elif instrType==insType.ADD:
             a_arith=asmlArithmetics(instruction)
@@ -72,7 +66,6 @@ class Tree:
 
     def registerAllocation_Spill(self):
         for label in self.labels:
-            #print("start\n",label,"end\n",isinstance(label,asmlFunc))
             if isinstance(label,asmlFunc):
                 #parameters
                 label.allocRegSpill()
