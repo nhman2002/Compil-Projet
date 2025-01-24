@@ -1,5 +1,6 @@
 {
     "ocaml.sandbox": {
         "kind": "global"
-    }
+    },
+    "terminal.integrated.useWslProfiles": false
 }

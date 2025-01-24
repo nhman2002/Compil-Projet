@@ -13,4 +13,8 @@ class Id {
         return new Id("?v" + x);
     }
 
+    public String getId() {
+        return id;
+    }
+
 }

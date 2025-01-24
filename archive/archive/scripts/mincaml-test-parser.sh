@@ -1,36 +1,32 @@
 #! /bin/sh
 cd "$(dirname "$0")"/.. || exit 1
 
-# TODO change this to point to your mincamlc executable if it's different, or add
-# it to your PATH. Use the appropriate option to run the parser as soon
-# as it is implemented
 MINCAMLC=java/mincamlc
 
-# run all test cases in syntax/valid and make sure they are parsed without error
-# run all test cases in syntax/invalid and make sure the parser returns an error
-
-# TODO extends this script to run test in subdirectories
-# 
+echo "\e[33mStart syntax test\e[0m\n"
 
 for test_case in tests/syntax/valid/*.ml
 do
     echo "testing parser on: $test_case"
-    if $MINCAMLC "$test_case" 2> /dev/null 1> /dev/null
+    $MINCAMLC -p "$test_case" 2> /dev/null 1> /dev/null
+    if [ $? -eq 0 ]
     then
-        echo "OK"
+        echo "\e[32mOK\e[0m"
     else 
-        echo "KO"
+        echo "\e[31mKO\e[0m"
     fi
 done
 
 for test_case in tests/syntax/invalid/*.ml
 do
     echo "testing parser on: $test_case"
-    if $MINCAMLC "$test_case" 2> /dev/null 1> /dev/null
+    $MINCAMLC -p "$test_case" 2> /dev/null 1> /dev/null
+    if [ $? -ne 0 ]
     then
-        echo "OK"
+        echo "\e[32mOK\e[0m"
     else 
-        echo "KO"
+        echo "\e[31mKO\e[0m"
     fi
 done
 
+echo "\e[33mEnd syntax test\e[0m\n"

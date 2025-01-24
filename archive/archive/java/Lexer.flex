@@ -77,9 +77,9 @@ comment =  "(*" [^*] ~"*)"
 "false" { return symbol(sym.BOOL, false); }
 "not"   { return symbol(sym.NOT); }
 
-{digit}+  { return symbol(sym.INT, new Integer(yytext())); }
+{digit}+  { return symbol(sym.INT, Integer.valueOf(yytext())); }
 {digit}+ ("." {digit}*)? (["e" "E"] ["+" "-"]? digit+)?  
-        { return symbol(sym.FLOAT, new java.lang.Float(yytext())); } 
+        { return symbol(sym.FLOAT, java.lang.Float.valueOf(yytext())); } 
 
 "-"     { return symbol(sym.MINUS); }
 "+"     { return symbol(sym.PLUS); }

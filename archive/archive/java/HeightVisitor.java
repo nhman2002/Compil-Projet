@@ -3,7 +3,7 @@ import java.util.*;
 class HeightVisitor implements ObjVisitor<Integer> {
 
     public Integer visit(Unit e) {
-        // This tree is of height 0
+        // Tree's height is 0
         return 0;
     }
 

@@ -1,6 +1,8 @@
 #!/bin/sh
 
-MINCAML_HOME=$(cd "$(dirname "$0")"/../ && pwd)
+MINCAML_HOME=$(cd "$(dirname "$0")/.." && pwd)
+# echo "MINCAML_HOME: $MINCAML_HOME" # Debug line
 CP_DIR="$MINCAML_HOME/java"
-CP="$CP_DIR/java-cup-11b-runtime.jar:$CP_DIR/"
+CP="$CP_DIR/java-cup-11b-runtime.jar:$CP_DIR/java-getopt-1.0.13.jar:$CP_DIR/"
+# echo "Classpath: $CP" # Debug line
 exec java -enableassertions -cp "$CP" Main "$@"
