@@ -1,0 +1,13 @@
+
+let _ = 
+	
+	let v0 = 123 in 
+	let v1 = 456 in 
+	let v2 = neg v1 in 
+	let v3 = call _min_caml_print_int v2 in 
+	let v4 = 0 in 
+	let v5 = 789 in 
+	let ?v1 = 
+	call _min_caml_print_int v0   in 
+	let ?v0 = v3  in 
+	let v6 = add v4 v5  in call _min_caml_print_int   v6   

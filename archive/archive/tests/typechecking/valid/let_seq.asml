@@ -2,6 +2,6 @@
 let _ = 
 	
 	let x = 1 in 
-	let ?v4 = unit in 
+	let ?v0 = unit in 
 	let x = 42 in 
 	call _min_caml_print_int x     
